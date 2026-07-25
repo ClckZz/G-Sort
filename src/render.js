@@ -1,8 +1,22 @@
+const { shell } = require("electron");
+console.log(shell);
+
 const categorize_btn = document.getElementById("categorize-btn");
 const remove_btn = document.getElementById("remove-btn");
+const login_btn = document.getElementById("login-btn");
 const how_many_input = document.getElementById("how_many_input");
 
 const selections = document.querySelectorAll(".selection");
+
+let loggedIn = false;
+
+async function getAuthenticationURL() {
+  const response = await fetch(
+      `http://127.0.0.1:8000/get_authentication_url`,
+      );
+
+  return await response.json();
+};
 
 async function get_labels() {
     const response = await fetch(
@@ -24,6 +38,23 @@ async function get_labels() {
     });
   });
 }
+
+login_btn.addEventListener("click", openBrowser)
+async function openBrowser() {
+    try {
+        const auth = await getAuthenticationURL();
+
+        console.log(auth);
+
+        await shell.openExternal(auth.url);
+    } catch (err) {
+        console.error("Login error:", err);
+    }
+}
+
+module.exports = {
+    openBrowser
+};
 
 get_labels();
 

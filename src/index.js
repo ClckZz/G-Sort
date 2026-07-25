@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, shell } = require('electron');
 const { spawn } = require('child_process');
 const path = require('node:path');
 const fs = require('node:fs');
@@ -54,7 +54,7 @@ function startBackend() {
 
   let started = false;
 
-  pyProcess.stdout.on('data', (data) => {
+  pyProcess.stdout.on('data', async (data) => {
     const output = data.toString();
     console.log('[backend]', output);
     logStream.write(`[stdout] ${output}`);
@@ -104,6 +104,8 @@ const createWindow = () => {
   });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;

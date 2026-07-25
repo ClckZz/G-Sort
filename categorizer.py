@@ -9,10 +9,15 @@ Fixes:
 - keine Tuple-Verwechslungen
 """
 
+import time
+
 import os
 import re
 import numpy as np
+t = time.time()
 import torch
+print("torch:", time.time() - t)
+
 import torch.nn as nn
 from torch.nn import functional as F
 from sentence_transformers import SentenceTransformer
@@ -69,22 +74,32 @@ class Net(nn.Module):
 
 
 # ── Embedder ─────────────────────────────────────────
-print("[agentTrain] Lade Embedder...")
-embedder = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+embedder = None
+
+def get_embedder():
+    global embedder
+    print("[agentTrain] Lade Embedder...")
+
+    if embedder is None:
+        print("Loading embedder...")
+        embedder = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+    return embedder
 
 
 def text_to_vec(text: str):
     """Gibt IMMER einen validen embedding vector zurück."""
     if not text or not isinstance(text, str):
         text = "empty email"
-    return embedder.encode(text)
+    return get_embedder().encode(text)
 
 
 # ── Globals ─────────────────────────────────────────
 model = Net().to(DEVICE)
 
 if os.path.exists(MODEL_PATH):
+    t = time.time()
     model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
+    print("model:", time.time() - t)
     print("[agentTrain] Modell geladen.")
 else:
     print("[agentTrain] Kein Modell gefunden → erst trainieren")
@@ -156,7 +171,9 @@ def load_cache():
     return X, y
 
 
+t = time.time()
 X_train, y_train = load_cache()
+print("cache:", time.time() - t)
 
 
 # ── Categorize ─────────────────────────────────────

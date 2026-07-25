@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 import os
 from dotenv import load_dotenv
 from googleapiclient.errors import HttpError
-from categorizer import CategorizePost
+from categorizer import CategorizePost, get_embedder
 import base64
 from fastapi import FastAPI
 import requests
@@ -31,15 +31,12 @@ config = {
     }
 }
 
-flow = InstalledAppFlow.from_client_config(
-    config,
-    SCOPES
-)
+flow = None
 
 # TODO: Open a tab in electron app instead
-creds = flow.run_local_server(port=0)
+creds = None
 
-service = build("gmail", "v1", credentials=creds)
+service = None
 
 LABEL_MAP = {
     "Important": "Label_8707031102432262693",
@@ -237,9 +234,30 @@ def categorize(how_many: int, desired_labels: str):
                 "how_many": how_many
             }
 
+@app.get("/get_authentication_url")
+def get_authentication_url():
+    global flow, creds, service
+
+    flow = InstalledAppFlow.from_client_config(
+        config,
+        SCOPES
+    )
+
+
+    creds = flow.run_local_server(port=0)
+
+    service = build("gmail", "v1", credentials=creds)
+
+    authenticationURL = flow.authorization_url()[0]
+    print("[Authentication: ]", authenticationURL)
+
+    return {
+        "url": authenticationURL
+    }
 
 @app.on_event("startup")
 async def on_startup():
+    get_embedder()
     print("API_READY", flush=True)
  
  
