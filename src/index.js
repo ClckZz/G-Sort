@@ -52,17 +52,21 @@ function startBackend() {
     },
   });
 
-  let started = false;
+  let labelsLoaded = false;
 
   pyProcess.stdout.on('data', (data) => {
+    createWindow();
+
     const output = data.toString();
     console.log('[backend]', output);
     logStream.write(`[stdout] ${output}`);
 
     // TODO: change to lazy load --> visual startup doesnt require that long
-    if (!started && output.includes('API_READY')) {
-      started = true;
-      createWindow();
+    if (!labelsLoaded && output.includes('API_READY')) {
+      labelsLoaded = true;
+      if (mainWindow) {
+        mainWindow.webContents.send('backend-ready');
+      }
     }
   });
 
@@ -83,7 +87,7 @@ function startBackend() {
   });
 
   setTimeout(() => {
-    if (!started) {
+    if (!labelsLoaded) {
       console.error('[main] Backend-Timeout, öffne Fenster trotzdem');
       logStream.write(`[timeout] Backend hat nach 30s kein API_READY gesendet\n`);
       createWindow();
@@ -100,6 +104,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 

@@ -1,3 +1,5 @@
+const { ipcRenderer } = require('electron');
+
 const categorize_btn = document.getElementById("categorize-btn");
 const remove_btn = document.getElementById("remove-btn");
 const how_many_input = document.getElementById("how_many_input");
@@ -25,7 +27,9 @@ async function get_labels() {
   });
 }
 
-get_labels();
+ipcRenderer.on('backend-ready', () => {
+  get_labels();
+});
 
 categorize_btn.addEventListener("click", categorizePosts);
 async function categorizePosts() {
