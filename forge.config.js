@@ -2,7 +2,7 @@ const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
-  outDir: 'C:/GSort1',
+  outDir: 'C:/GSort2',
   packagerConfig: {
     asar: false,
     ignore: [

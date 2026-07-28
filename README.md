@@ -41,7 +41,7 @@ I also wouldn't recommend using the default spam folder due to the risk of auto 
 
 ## Usage
 
-1. Launch G-Sort. (Due to the local AI it could take up to 120 seconds depending on your specs)
+1. Launch G-Sort.
 2. Sign in with your Google account.
 3. Choose which category fits which label.
 4. Let the AI sort your inbox.

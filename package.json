@@ -1,7 +1,7 @@
 {
   "name": "GSort",
   "productName": "gsort",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Minimalistic Gmail Sorter",
   "main": "src/index.js",
   "private": true,
