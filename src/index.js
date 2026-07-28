@@ -61,7 +61,6 @@ function startBackend() {
     console.log('[backend]', output);
     logStream.write(`[stdout] ${output}`);
 
-    // TODO: change to lazy load --> visual startup doesnt require that long
     if (!labelsLoaded && output.includes('API_READY')) {
       labelsLoaded = true;
       if (mainWindow) {
@@ -109,6 +108,7 @@ const createWindow = () => {
   });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;

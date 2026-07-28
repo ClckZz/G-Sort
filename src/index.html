@@ -4,43 +4,45 @@
     <meta charset="UTF-8" />
     <title>G-Sort</title>
     <link rel="stylesheet" href="index.css" />
-    <script defer src="render.js"></script>
     <script type="module">
-      import { animate, stagger } from "https://cdn.jsdelivr.net/npm/animejs@4.0.0/+esm";
+      import { animate, stagger, createTimeline } from "https://cdn.jsdelivr.net/npm/animejs@4.0.0/+esm";
 
       window.animate = animate;
       window.stagger = stagger;
+      window.createTimeline = createTimeline;
     </script>
+    <script defer src="render.js"></script>
   </head>
   <body>
-    <div class="label-id-area">
+    <div class="label-id-area" id="label-id-area">
       <p>Select the fitting Email!</p>
-      <div class="label-select">
+      <div class="spinner" id="spinner"></div>
+      <div class="label-select" id="label-select">
         <p>Important</p>
         <select name="Important" id="Important" class="selection">
         </select>
       </div>
-      <div class="label-select">
+      <div class="label-select" id="label-select">
         <p>Newsletter</p>
         <select name="Newsletter" id="Newsletter" class="selection">
         </select>
       </div>
-      <div class="label-select">
+      <div class="label-select" id="label-select">
         <p>Shopping</p>
         <select name="Shopping" id="Shopping" class="selection">
         </select>
       </div>
-      <div class="label-select">
+      <div class="label-select" id="label-select">
         <p>Finance</p>
         <select name="Finance" id="Finance" class="selection">
         </select>
       </div>
-      <div class="label-select">
+      <div class="label-select" id="label-select">
         <p>Notifications</p>
         <select name="Notifications" id="Notifications" class="selection">
         </select>
       </div>
-      <div class="label-select">
+      <div class="label-select" id="label-select">
         <p>Spam</p>
         <select name="Spam" id="Spam" class="selection">
         </select>

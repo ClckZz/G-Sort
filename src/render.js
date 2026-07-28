@@ -6,6 +6,14 @@ const how_many_input = document.getElementById("how_many_input");
 
 const selections = document.querySelectorAll(".selection");
 
+const loadingSpinner = document.getElementById("spinner");
+const labelSelect = document.querySelectorAll(".label-select");
+const labelIdArea = document.getElementById("label-id-area");
+
+labelSelect.forEach(element => {
+  element.classList.add("disabled");
+});
+
 async function get_labels() {
     const response = await fetch(
       "http://127.0.0.1:8000/get_labels",
@@ -28,6 +36,10 @@ async function get_labels() {
 }
 
 ipcRenderer.on('backend-ready', () => {
+  loadingSpinner.classList.add("disabled");
+  labelSelect.forEach(element => {
+    element.classList.remove("disabled");
+  });
   get_labels();
 });
 
