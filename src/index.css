@@ -1,3 +1,17 @@
+:root{
+  --bg:#0f1115;          /* Fenster-Hintergrund */
+  --surface:#1e2229;     /* Karten/Panels */
+  --surface-2:#252932;   /* Eingabefelder */
+  --border:#2d323c;      /* Trennlinien, Rahmen */
+
+  --text:#e9eaed;        /* Primärtext */
+  --text-dim:#9098a3;    /* Sekundärtext */
+  --text-faint:#5b6270;  /* Labels, Captions */
+
+  --accent:#e8a93e;      /* Kategorisieren-Button, Fokusringe */
+  --danger:#d6564b;      /* Entfernen-Button */
+}
+
 body {
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
@@ -5,40 +19,61 @@ body {
   margin: auto;
   max-width: 38rem;
   padding: 2rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  background-color: black;
+  display: flex;
+  gap: 1em;
+  flex-direction: column  ;
+  background-color: var(--bg);
   overflow: hidden;
+  color: var(--text);
 }
 
 .other_inputs {
   display: flex;
   flex-direction: column;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.line {
+  width: 90%;
+  margin: 24px auto;
+  border: none;
+  border-top: 1px solid var(--border);
+  height: 0;
 }
 
 .primary_btn {
-  display: grid;
   grid-column: 2;
   grid-row: 1;
   align-self: center;
   justify-self: center;
+}
+
+.primary_btn.categorize {
+  background-color: var(--accent);
+}
+
+.primary_btn.remove {
+  background-color: var(--danger);
 }
 
 .how_many_input {
-  display: grid;
   grid-column: 2;
   grid-row: 1;
   align-self: center;
   justify-self: center;
+  background-color: var(--surface-2);
+  outline: none;
+  border: none;
 }
 
 .label-id-area {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-column: 1;
-  grid-row: 1/2;
-  height: 80vh;
-  background-color: grey;
+  grid-row: 2;
+  /*height: 80vh;*/
+  background-color: var(--surface);
 }
 
 .label-select.disabled {
@@ -50,17 +85,29 @@ body {
 }
 
 .label-select {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr;
   justify-content: space-between;
   margin-right: 1em;
   margin-left: 1em;
+}
+
+.label-select p {
+    grid-column: 1;
+}
+
+.label-select span {
+  grid-column: 2;
+  align-self: center;
+  justify-self: center;
+  color: var(--text-dim);
 }
 
 .selection {
   align-self: center;
   height: 50%;
   width: 50%;
+  grid-column: 3;
 }
 
 .spinner {

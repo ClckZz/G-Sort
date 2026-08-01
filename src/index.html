@@ -14,11 +14,18 @@
     <script defer src="render.js"></script>
   </head>
   <body>
+    <div class="other_inputs">
+        <input id="how_many_input" type="number" class="how_many_input"/ placeholder="How many Emails would you like to change? (Max 500)">
+        <button id="categorize-btn" class="primary_btn categorize">Categorize</button>
+        <button id="remove-btn" class="primary_btn remove">Remove</button>
+    </div>
+    <div class="line"></div>
     <div class="label-id-area" id="label-id-area">
       <p>Select the fitting Email!</p>
       <div class="spinner" id="spinner"></div>
       <div class="label-select" id="label-select">
         <p>Important</p>
+        <span>→</span>
         <select name="Important" id="Important" class="selection">
         </select>
       </div>
@@ -47,11 +54,6 @@
         <select name="Spam" id="Spam" class="selection">
         </select>
       </div>
-    </div>
-    <div class="other_inputs">
-        <input id="how_many_input" type="number" class="how_many_input"/ placeholder="How many Emails would you like to change? (Max 500)">
-        <button id="categorize-btn" class="primary_btn">Categorize</button>
-        <button id="remove-btn" class="primary_btn">Remove</button>
     </div>
   </body>
 </html>
